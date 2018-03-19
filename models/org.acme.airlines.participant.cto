@@ -4,12 +4,21 @@ abstract participant ACMEParticipant identified by participantKey {
   o String participantKey
 }
 
+concept contact {
+  o String firstName
+  o String lastName
+  o String adress
+}
+
 participant ACMENetworkAdmin extends ACMEParticipant{
+  o contact contactInformation
 }
 
 participant ACMEPersonnel extends ACMEParticipant{
   o String deparment
+  o contact contactInformation
 }
 
 participant B2BPartner extends ACMEParticipant{
+  o contact contactInformation
 }
