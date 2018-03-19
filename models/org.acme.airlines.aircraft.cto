@@ -17,3 +17,7 @@ enum Ownerwhip {
   o LEASED
   o OWNED
 }
+
+transaction ChangeNumberSeats {
+  o String detail
+}
