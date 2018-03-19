@@ -1,0 +1,19 @@
+/**
+ * Write your model definitions here
+ */
+
+namespace org.acme.airlines.aircraft
+
+asset Aircraft identified by aircraftId {
+  o String aircraftId
+  o Ownerwhip ownershipType default="LEASED"
+  //Number of seats per class
+  o Integer firstClassSeats
+  o Integer businessClassSeats
+  o Integer economyClassSeats
+}
+
+enum Ownerwhip {
+  o LEASED
+  o OWNED
+}
