@@ -14,7 +14,7 @@ const path = require('path');
 require('chai').should();
 
 const namespace = 'org.acme.airlines';
-const assetType = 'SampleAsset';
+const assetType = 'Aircraft';
 
 describe('#' + namespace, () => {
     // In-memory card store for testing so cards are not persisted to the file system
@@ -83,7 +83,7 @@ describe('#' + namespace, () => {
         });
     });
 
-    describe('ChangeAssetValue()', () => {
+    /*describe('ChangeAssetValue()', () => {
         it('should change the value property of ' + assetType + ' to newValue', () => {
             const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
 
@@ -121,6 +121,6 @@ describe('#' + namespace, () => {
                 newAsset.value.should.equal(changeAssetValue.newValue);
             });
         });
-    });
+    });*/
 
 });
