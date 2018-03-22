@@ -1,0 +1,28 @@
+namespace org.acme.airlines.flight
+
+import org.acme.airlines.aircraft.Aircraft
+
+asset Flight identified by flightId {
+  o String flightId regex=/[A-Z]{3}-([1-9][0-9]{0,1}-){2}[2-9][0-9]{3}/
+  o String flightNumber
+  o Route route
+  o String[] aliasFlightNumber
+  --> Aircraft aircraft optional
+}
+
+concept Route {
+  o String origin
+  o String destination
+  o DateTime schedule
+}
+
+transaction CreateFlight {
+  o String flightNumber
+  o String origin
+  o String destination
+  o DateTime schedule
+}
+
+event FlightCreated {
+  o String flightId
+}

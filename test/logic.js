@@ -13,14 +13,18 @@ const path = require('path');
 
 require('chai').should();
 
-const namespace = 'org.acme.airlines';
-const assetType = 'Aircraft';
+const namespaces = {
+    'aircraft': 'org.acme.airlines.aircraft',
+    'flight': 'org.acme.airlines.flight',
+    'participant': 'org.acme.airlines.participant'
+};
 
-describe('#' + namespace, () => {
+describe('#org.acme.airlines', () => {
     // In-memory card store for testing so cards are not persisted to the file system
     const cardStore = new MemoryCardStore();
     let adminConnection;
     let businessNetworkConnection;
+    let businessNetworkDefinition;
 
     before(() => {
         // Embedded connection used for local testing
@@ -56,7 +60,6 @@ describe('#' + namespace, () => {
 
         const adminUserName = 'admin';
         let adminCardName;
-        let businessNetworkDefinition;
 
         return BusinessNetworkDefinition.fromDirectory(path.resolve(__dirname, '..')).then(definition => {
             businessNetworkDefinition = definition;
@@ -80,47 +83,39 @@ describe('#' + namespace, () => {
         }).then(() => {
             // Connect to the business network using the network admin identity
             return businessNetworkConnection.connect(adminCardName);
+        }).then(result => {
+            businessNetworkDefinition = result;
         });
     });
 
-    /*describe('ChangeAssetValue()', () => {
-        it('should change the value property of ' + assetType + ' to newValue', () => {
-            const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
-
-            // Create a user participant
-            const user = factory.newResource(namespace, 'User', 'Cesar Bonilla');
-
-            // Create the asset
-            const asset = factory.newResource(namespace, assetType, 'ASSET_001');
-            asset.value = 'old-value';
-
-            // Create a transaction to change the asset's value property
-            const changeAssetValue = factory.newTransaction(namespace, 'ChangeAssetValue');
-            changeAssetValue.relatedAsset = factory.newRelationship(namespace, assetType, asset.$identifier);
-            changeAssetValue.newValue = 'new-value';
-
-            let assetRegistry;
-
-            return businessNetworkConnection.getAssetRegistry(namespace + '.' + assetType).then(registry => {
-                assetRegistry = registry;
-                // Add the asset to the appropriate asset registry
-                return registry.add(asset);
-            }).then(() => {
-                return businessNetworkConnection.getParticipantRegistry(namespace + '.User');
-            }).then(userRegistry => {
-                // Add the user to the appropriate participant registry
-                return userRegistry.add(user);
-            }).then(() => {
-                // Submit the transaction
-                return businessNetworkConnection.submitTransaction(changeAssetValue);
-            }).then(registry => {
-                // Get the asset
-                return assetRegistry.get(asset.$identifier);
-            }).then(newAsset => {
-                // Assert that the asset has the new value property
-                newAsset.value.should.equal(changeAssetValue.newValue);
+    describe('CreateFlight()', () => {
+        it('should create a flight and trigger the event', () => {
+            const factory = businessNetworkDefinition.getFactory();
+            const aircraft = factory.newResource(namespaces.aircraft, 'Aircraft', 'AIRCRFT_001');
+            aircraft.ownershipType = 'OWNED';
+            aircraft.firstClassSeats = 20;
+            aircraft.businessClassSeats = 30;
+            aircraft.economyClassSeats = 40;
+            //Create transaction
+            let serializer = businessNetworkDefinition.getSerializer();
+            let createFligthTx = serializer.fromJSON({
+                $class: 'org.acme.airlines.flight.CreateFlight',
+                flightNumber: 'FL0110',
+                origin: 'SPS',
+                destination: 'MLF',
+                schedule: new Date()
             });
-        });
-    });*/
 
+            let aircraftRegistry;
+            return businessNetworkConnection.getAssetRegistry(namespaces.aircraft + '.' + 'Aircraft')
+                .then(registry => {
+                    aircraftRegistry = registry;
+                    // Add the asset to the appropriate asset registry
+                    return registry.add(aircraft);
+                }).then(() => {
+                    // Submit the transaction
+                    businessNetworkConnection.submitTransaction(createFligthTx);
+                });
+        });
+    });
 });

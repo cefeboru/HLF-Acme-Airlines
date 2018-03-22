@@ -1,6 +1,6 @@
 {
   "name": "acme-airlines",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Network to manage airlines bussines logic.",
   "scripts": {
     "test": "mocha --recursive"

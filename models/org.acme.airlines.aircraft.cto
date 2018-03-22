@@ -1,7 +1,3 @@
-/**
- * Write your model definitions here
- */
-
 namespace org.acme.airlines.aircraft
 
 asset Aircraft identified by aircraftId {
@@ -16,8 +12,4 @@ asset Aircraft identified by aircraftId {
 enum Ownerwhip {
   o LEASED
   o OWNED
-}
-
-transaction ChangeNumberSeats {
-  o String detail
 }
