@@ -1,0 +1,19 @@
+query GetAllAircraft {
+  description: "Return all aircrafts"
+  statement:
+    SELECT org.acme.airlines.aircraft.Aircraft
+}
+
+query GetAircraftsByOwnershipType {
+  description: "Return all aircrafts"
+  statement:
+    SELECT org.acme.airlines.aircraft.Aircraft
+    WHERE (ownershipType == _$ownership_type)
+}
+
+query GetAircraftsByCustomCriteria {
+  description: "Return all aircrafts"
+  statement:
+    SELECT org.acme.airlines.aircraft.Aircraft
+    WHERE (firstClassSeats >= _$x AND businessClassSeats >= _$x AND economyClassSeats >= _$x)
+}
