@@ -15,5 +15,9 @@ query GetAircraftsByCustomCriteria {
   description: "Return all aircrafts"
   statement:
     SELECT org.acme.airlines.aircraft.Aircraft
-    WHERE (firstClassSeats >= _$x AND businessClassSeats >= _$x AND economyClassSeats >= _$x)
+    WHERE (
+            firstClassSeats >= _$x AND
+            businessClassSeats >= _$x AND
+            economyClassSeats >= _$x
+          )
 }

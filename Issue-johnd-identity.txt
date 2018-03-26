@@ -1,0 +1,1 @@
+composer identity issue -u johnd -a org.acme.airline.participant.ACMENetworkAdmin#johnd -c admin@acme-airlines -x

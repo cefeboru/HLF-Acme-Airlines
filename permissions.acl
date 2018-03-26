@@ -1,0 +1,39 @@
+rule NetworkAdminSystemResources {
+  description: "Read access to system resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminManageParticipants {
+  description: "Read access to system resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: CREATE, READ
+  resource: "org.acme.airlines.participant.*"
+  action: ALLOW
+}
+
+rule AcmeNetworkAdminSystemResources {
+  description: "Read access to system resources"
+  participant: "org.acme.airlines.participant.ACMENetworkAdmin"
+  operation: READ
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminAcmeResources {
+  description: "Read access to ACME resources"
+  participant: "org.acme.airlines.participant.ACMENetworkAdmin"
+  operation: READ
+  resource: "org.acme.airlines.**"
+  action: ALLOW
+}
+
+rule AcmeNetworkAdminParticipants {
+  description: "Manage participants"
+  participant: "org.acme.airlines.participant.ACMENetworkAdmin"
+  operation: ALL
+  resource: "org.acme.airlines.participant.*"
+  action: ALLOW
+}

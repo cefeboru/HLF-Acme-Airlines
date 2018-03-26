@@ -1,0 +1,1 @@
+composer participant add -d '{"$class":"org.acme.airlines.participant.ACMENetworkAdmin", "participantKey":"johnd", "contactInformation":{"$class":"org.acme.airlines.participant.contact", "firstName": "John", "lastName": "Doe", "adress":"street 1, road 1"}}' -c admin@acme-airlines
